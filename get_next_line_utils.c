@@ -3,50 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnestere <mnestere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atvii <atvii@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 21:08:57 by atvii             #+#    #+#             */
-/*   Updated: 2025/10/15 17:42:16 by mnestere         ###   ########.fr       */
+/*   Updated: 2025/10/15 22:35:19 by atvii            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+char	*free_and_null(char *stash)
+{
+	free(stash);
+	return (NULL);
+}
 
 char	*read_and_stash(int fd, char *stash)
 {
 	char	*temp;
 	ssize_t	b_read;
 
-	temp = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!temp || stash)
-		return (NULL);
-	b_read = 0;
-	while (ft_strchr(stash, '\n') && read > 0)
+	b_read = 1;
+	while (!find_the_n(stash) && b_read != 0)
 	{
+		temp = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+		if (!temp)
+			return (NULL);
 		b_read = read(fd, temp, BUFFER_SIZE);
 		if (b_read == -1)
 		{
 			free(temp);
-			free(stash);
-			return (NULL);
+			stash = free_and_null(stash);
 		}
 		temp[b_read] = '\0';
 		stash = ft_strjoin(stash, temp);
 	}
-	free(temp);
 	if (stash)
-	{
-		free(stash);
-		return (NULL);
-	}
+		stash = free_and_null(stash);
 	return (stash);
 }
-char *get_line_from_stash(char *stash)
+
+char	*extract_line_from_stash(char *stash)
 {
-	
+	size_t	line_len;
+	char	*new_line_ptr;
+
+	if (!stash)
+		return (NULL);
+	new_line_ptr = find_the_n(stash);
+	if (new_line_ptr)
+		line_len = (new_line_ptr - stash) + 1;
+	else
+		line_len = ft_strlen(stash);
+	return (ft_substr(stash, 0, line_len));
 }
 
-char	*ft_strchr(const char *str, int c)
+char	*find_the_n(const char *str)
 {
 	size_t	i;
 
@@ -55,12 +67,10 @@ char	*ft_strchr(const char *str, int c)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == (char)c)
+		if (str[i] == '\n')
 			return ((char *)&str[i]);
 		i++;
 	}
-	if ((char)c == '\0')
-		return ((char *)&str[i]);
 	return (NULL);
 }
 
