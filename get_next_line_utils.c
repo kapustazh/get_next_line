@@ -6,39 +6,45 @@
 /*   By: mnestere <mnestere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 21:08:57 by atvii             #+#    #+#             */
-/*   Updated: 2025/10/10 16:55:51 by mnestere         ###   ########.fr       */
+/*   Updated: 2025/10/15 17:42:16 by mnestere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-// ssize_t	copy_line(int fd, char *buf)
-// {
-// 	ssize_t	num;
-// 	ssize_t	read_status;
-// 	char	c;
+char	*read_and_stash(int fd, char *stash)
+{
+	char	*temp;
+	ssize_t	b_read;
 
-// 	num = 0;
-// 	while (num < BUFFER_SIZE - 1)
-// 	{
-// 		read_status = read(fd, &c, BUFFER_SIZE);
-// 		if (read_status == 1)
-// 		{
-// 			buf[num] = c;
-// 			if (c == '\n')
-// 				break ;
-// 			num++;
-// 		}
-// 		else if (read_status == 0)
-// 			break ;
-// 		else
-// 			return (-1);
-// 	}
-// 	if (num == 0)
-// 		return (0);
-// 	buf[num] = '\0';
-// 	return (num);
-// }
+	temp = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!temp || stash)
+		return (NULL);
+	b_read = 0;
+	while (ft_strchr(stash, '\n') && read > 0)
+	{
+		b_read = read(fd, temp, BUFFER_SIZE);
+		if (b_read == -1)
+		{
+			free(temp);
+			free(stash);
+			return (NULL);
+		}
+		temp[b_read] = '\0';
+		stash = ft_strjoin(stash, temp);
+	}
+	free(temp);
+	if (stash)
+	{
+		free(stash);
+		return (NULL);
+	}
+	return (stash);
+}
+char *get_line_from_stash(char *stash)
+{
+	
+}
 
 char	*ft_strchr(const char *str, int c)
 {
