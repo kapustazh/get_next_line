@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atvii <atvii@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnestere <mnestere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/30 21:08:57 by atvii             #+#    #+#             */
-/*   Updated: 2025/10/15 22:35:19 by atvii            ###   ########.fr       */
+/*   Created: 2025/10/09 21:08:57 by mnestere          #+#    #+#             */
+/*   Updated: 2025/10/17 18:33:39 by mnestere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,26 @@ char	*read_and_stash(int fd, char *stash)
 	char	*temp;
 	ssize_t	b_read;
 
+	temp = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!temp)
+		return (free_and_null(stash));
 	b_read = 1;
-	while (!find_the_n(stash) && b_read != 0)
+	while (!find_the_n(stash) && b_read > 0)
 	{
-		temp = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-		if (!temp)
-			return (NULL);
 		b_read = read(fd, temp, BUFFER_SIZE);
-		if (b_read == -1)
+		if (b_read < 0)
 		{
 			free(temp);
-			stash = free_and_null(stash);
+			return (free_and_null(stash));
 		}
+		if (b_read == 0)
+			break ;
 		temp[b_read] = '\0';
-		stash = ft_strjoin(stash, temp);
+		stash = join_and_free(stash, temp);
+		if (!stash)
+			return (free_and_null(stash));
 	}
-	if (stash)
-		stash = free_and_null(stash);
+	free(temp);
 	return (stash);
 }
 
@@ -78,10 +81,15 @@ char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*result;
 	char	*ptr;
+	size_t	s1_len;
 
-	if (!s1 || !s2)
+	if (!s2)
 		return (NULL);
-	result = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!s1)
+		s1_len = 0;
+	else
+		s1_len = ft_strlen(s1);
+	result = (char *)malloc(s1_len + ft_strlen(s2) + 1);
 	if (!result)
 		return (NULL);
 	ptr = result;

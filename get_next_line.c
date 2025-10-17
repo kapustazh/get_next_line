@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atvii <atvii@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnestere <mnestere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/30 21:10:57 by atvii             #+#    #+#             */
-/*   Updated: 2025/10/15 22:38:03 by atvii            ###   ########.fr       */
+/*   Created: 2025/10/09 21:10:57 by mnestere          #+#    #+#             */
+/*   Updated: 2025/10/17 18:48:07 by mnestere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,21 @@ size_t	ft_strlen(const char *s)
 {
 	size_t	i;
 
+	if (!s)
+		return (0);
 	i = 0;
 	while (s[i])
 		i++;
 	return (i);
 }
+
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	size_t	i;
 	size_t	s_len;
 	char	*substr;
 
-	if ((!s))
+	if (!s)
 		return (NULL);
 	s_len = ft_strlen(s);
 	if (start >= s_len)
@@ -46,9 +49,33 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	substr[i] = '\0';
 	return (substr);
 }
-char *clean_stash(char *stash)
+char	*join_and_free(char *stash, char *temp)
 {
- 
+	char	*new_stash;
+
+	new_stash = (ft_strjoin(stash, temp));
+	free(stash);
+	return (new_stash);
+}
+
+char	*clean_stash(char *stash)
+{
+	int		i;
+	char	*remaining_stash;
+
+	if (!stash)
+		return (NULL);
+	i = 0;
+	while (stash[i] && stash[i] != '\n')
+		i++;
+	if (!stash[i])
+	{
+		free(stash);
+		return (NULL);
+	}
+	remaining_stash = ft_substr(stash, i + 1, ft_strlen(stash) - i);
+	free(stash);
+	return (remaining_stash);
 }
 
 char	*get_next_line(int fd)
@@ -62,7 +89,9 @@ char	*get_next_line(int fd)
 	if (!stash)
 		return (NULL);
 	line = extract_line_from_stash(stash);
-	clean_stash(stash);
+	if (!line)
+		return (free_and_null(stash));
+	stash = clean_stash(stash);
 	return (line);
 }
 
