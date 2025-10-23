@@ -49,6 +49,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	substr[i] = '\0';
 	return (substr);
 }
+
 char	*join_and_free(char *stash, char *temp)
 {
 	char	*new_stash;
@@ -95,7 +96,7 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int	main(void)
+/*int	main(void)
 {
  	int		fd;
  	char	*line;
@@ -112,4 +113,4 @@ int	main(void)
  	}
  	close(fd);
  	return (0);
-}
+}*/

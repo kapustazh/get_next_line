@@ -27,6 +27,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+char  *join_and_free(char *stash, char *temp);
 char	*get_next_line(int fd);
 char	*find_the_n(const char *str);
 char	*ft_strjoin(char const *s1, char const *s2);
@@ -34,7 +35,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*extract_line_from_stash(char *stash);
 char	*read_and_stash(int fd, char *stash);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-void	*free_and_null(char *stash);
+char	*free_and_null(char *stash);
 size_t	ft_strlen(const char *s);
 char	*clean_stash(char *stash);
 

@@ -43,6 +43,8 @@ char	*read_and_stash(int fd, char *stash)
 			return (free_and_null(stash));
 	}
 	free(temp);
+  if(b_read == 0 && (!stash || !*stash))
+    return (free_and_null(stash));
 	return (stash);
 }
 
@@ -51,7 +53,7 @@ char	*extract_line_from_stash(char *stash)
 	size_t	line_len;
 	char	*new_line_ptr;
 
-	if (!stash)
+	if (!stash || !*stash)
 		return (NULL);
 	new_line_ptr = find_the_n(stash);
 	if (new_line_ptr)
@@ -79,20 +81,20 @@ char	*find_the_n(const char *str)
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*result;
-	char	*ptr;
-	size_t	s1_len;
+	char	*res;
+  size_t  i;
+  size_t  j;
 
-	if (!s2)
+  i = 0;
+  j = 0;
+	res = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	if (!res)
 		return (NULL);
-	result = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
-	if (!result)
-		return (NULL);
-	ptr = result;
-	while (*s1)
-		*ptr++ = *s1++;
-	while (*s2)
-		*ptr++ = *s2++;
-	*ptr = '\0';
-	return (result);
+	while (s1 && s1[i])
+	  res[j++] = s1[i++];
+  i = 0;
+	while (s2 && s2[i])
+		res[j++] = s2[i];
+  res[j] = '\0';
+	return (res);
 }
