@@ -6,23 +6,11 @@
 /*   By: mnestere <mnestere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 21:10:57 by mnestere          #+#    #+#             */
-/*   Updated: 2025/10/17 18:53:25 by mnestere         ###   ########.fr       */
+/*   Updated: 2025/10/23 20:04:49 by mnestere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	if (!s)
-		return (0);
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
@@ -32,12 +20,12 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 	if (!s)
 		return (NULL);
-	s_len = ft_strlen(s);
+  s_len = ft_strlen(s);
 	if (start >= s_len)
 		len = 0;
 	else if (len > s_len - start)
 		len = s_len - start;
-	substr = (char *)malloc(sizeof(char) * (len + 1));
+	substr = (char *)malloc(sizeof(char) * (s_len + 1));
 	if (!substr)
 		return (NULL);
 	i = 0;
@@ -79,6 +67,15 @@ char	*clean_stash(char *stash)
 	return (remaining_stash);
 }
 
+size_t ft_strlen(const char *s)
+{
+  size_t  i;
+
+  i = 0;
+  while(s[i])
+    i++;
+  return (i);
+}
 char	*get_next_line(int fd)
 {
 	char		*line;
@@ -88,14 +85,13 @@ char	*get_next_line(int fd)
 		return (NULL);
 	stash = read_and_stash(fd, stash);
 	if (!stash)
-		return (NULL);
+		return (stash = NULL, NULL);
 	line = extract_line_from_stash(stash);
 	if (!line)
-		return (free_and_null(stash));
+		return (stash = NULL, free_and_null(stash));
 	stash = clean_stash(stash);
 	return (line);
 }
-
 /*int	main(void)
 {
  	int		fd;
