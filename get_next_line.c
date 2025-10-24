@@ -6,12 +6,14 @@
 /*   By: atvii <atvii@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 21:10:57 by mnestere          #+#    #+#             */
-/*   Updated: 2025/10/24 02:32:01 by atvii            ###   ########.fr       */
+/*   Updated: 2025/10/24 03:33:25 by atvii            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+/* Extracts substring from string s starting at position start with length len
+ Handles edge cases: NULL string, start beyond string length */
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	size_t	i;
@@ -44,7 +46,10 @@ char	*join_and_free(char *stash, char *temp)
 
 	new_stash = ft_strjoin(stash, temp);
 	if (!new_stash)
+	{
+		free(stash);
 		return (NULL);
+	}
 	free(stash);
 	return (new_stash);
 }
@@ -91,40 +96,46 @@ char	*get_next_line(int fd)
 	if (read(fd, NULL, 0) < 0)
 	{
 		free(stash);
-		stash = NULL;
-		return (NULL);
+		return (stash = NULL, NULL);
 	}
 	stash = read_and_stash(fd, stash);
 	if (!stash)
-	{
-		stash = NULL;
-		return (NULL);
-	}
+		return (stash = NULL, NULL);
 	line = extract_line_from_stash(stash);
 	if (!line)
 	{
 		free(stash);
-		stash = NULL;
-		return (NULL);
+		return (stash = NULL, NULL);
 	}
 	stash = clean_stash(stash);
 	return (line);
 }
-/*int	main(void)
-{
-	int		fd;
-	char	*line;
 
-	fd = open("test.txt", O_RDONLY);
-	if (fd == -1)
-		return (1);
-	line = get_next_line(fd);
-	while (line != NULL)
-	{
-		printf("%s", line);
-		free(line);
-		line = get_next_line(fd);
-	}
-	close(fd);
-	return (0);
-}*/
+// int	main(void)
+// {
+// 	int		fd;
+// 	char	*line;
+// 	int		lines_read;
+
+// 	fd = open("test2.txt", O_RDONLY);
+// 	if (fd == -1)
+// 		return (1);
+
+// 	lines_read = 0;
+// 	while (1)
+// 	{
+// 		line = get_next_line(fd);
+// 		if (!line)
+// 			break;
+// 		printf("%s", line);
+// 		free(line);
+// 		// if (lines_read == 5)
+// 		// {
+// 		// 	while ((line = get_next_line(fd)) != NULL)
+// 		// 		free(line);
+// 		// 	break;
+// 		// }
+// 	}
+// 	close(fd);
+// 	return (0);
+// }

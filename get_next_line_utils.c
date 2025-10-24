@@ -6,7 +6,7 @@
 /*   By: atvii <atvii@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 21:08:57 by mnestere          #+#    #+#             */
-/*   Updated: 2025/10/24 02:34:35 by atvii            ###   ########.fr       */
+/*   Updated: 2025/10/24 03:33:28 by atvii            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ char	*read_and_stash(int fd, char *stash)
 
 	temp = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!temp)
+	{
+		free(stash);
 		return (NULL);
+	}
 	b_read = 1;
 	while (!find_the_n(stash) && b_read != 0)
 	{
@@ -35,15 +38,8 @@ char	*read_and_stash(int fd, char *stash)
 			free(stash);
 			return (free_and_null(temp));
 		}
-		if (b_read == 0 && (stash == NULL || ft_strlen(stash) == 0))
-		{
-			free(stash);
-			return (free_and_null(temp));
-		}
 		temp[b_read] = '\0';
 		stash = join_and_free(stash, temp);
-		if (!stash)
-			return (free_and_null(temp));
 	}
 	free(temp);
 	return (stash);
