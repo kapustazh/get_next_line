@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnestere <mnestere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atvii <atvii@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 21:08:57 by mnestere          #+#    #+#             */
-/*   Updated: 2025/10/23 20:13:27 by mnestere         ###   ########.fr       */
+/*   Updated: 2025/10/24 02:34:35 by atvii            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,26 +25,27 @@ char	*read_and_stash(int fd, char *stash)
 
 	temp = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!temp)
-		return (free_and_null(stash));
+		return (NULL);
 	b_read = 1;
-	while (!find_the_n(stash) && b_read > 0)
+	while (!find_the_n(stash) && b_read != 0)
 	{
 		b_read = read(fd, temp, BUFFER_SIZE);
-		if (b_read < 0)
+		if (b_read == -1)
 		{
-			free(temp);
-			return (free_and_null(stash));
+			free(stash);
+			return (free_and_null(temp));
 		}
-		if (b_read == 0)
-			break ;
+		if (b_read == 0 && (stash == NULL || ft_strlen(stash) == 0))
+		{
+			free(stash);
+			return (free_and_null(temp));
+		}
 		temp[b_read] = '\0';
 		stash = join_and_free(stash, temp);
 		if (!stash)
-			return (free_and_null(stash));
+			return (free_and_null(temp));
 	}
 	free(temp);
-	if (b_read == 0 && (!stash || !*stash))
-		return (free_and_null(stash));
 	return (stash);
 }
 
@@ -53,13 +54,15 @@ char	*extract_line_from_stash(char *stash)
 	size_t	line_len;
 	char	*new_line_ptr;
 
-	if (!stash || !*stash)
+	if (!stash)
 		return (NULL);
 	new_line_ptr = find_the_n(stash);
 	if (new_line_ptr)
 		line_len = (new_line_ptr - stash) + 1;
 	else
 		line_len = ft_strlen(stash);
+	if (line_len == 0)
+		return (NULL);
 	return (ft_substr(stash, 0, line_len));
 }
 
@@ -85,8 +88,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	i;
 	size_t	j;
 
-	if (!s1 || s2)
-		return (NULL);
 	i = 0;
 	j = 0;
 	res = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
