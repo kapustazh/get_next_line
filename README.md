@@ -20,10 +20,10 @@ cc -Wall -Wextra -Werror -D BUFFER_SIZE=42 \
    get_next_line.c get_next_line_utils.c \
    -o gnl_demo
 ```
-Bonus (multi-fd):
+- Bonus (multi-fd):
 ```sh
 cc -Wall -Wextra -Werror -D BUFFER_SIZE=42 \
    get_next_line_bonus.c get_next_line_utils_bonus.c \
    -o gnl_demo_bonus
 ```
--BUFFER_SIZE define is user changable via -D to compare the output
+- BUFFER_SIZE define is user changable via -D to compare the output
