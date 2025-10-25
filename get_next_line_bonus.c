@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atvii <atvii@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 21:10:57 by mnestere          #+#    #+#             */
-/*   Updated: 2025/10/26 00:21:41 by atvii            ###   ########.fr       */
+/*   Updated: 2025/10/26 00:12:35 by atvii            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	substr[i] = '\0';
 	return (substr);
 }
-/* Joins stash and temp into new string, frees old stash
-   Returns NULL and frees stash if malloc fails */
+
 char	*join_and_free(char *stash, char *temp)
 {
 	char	*new_stash;
@@ -54,8 +53,7 @@ char	*join_and_free(char *stash, char *temp)
 	free(stash);
 	return (new_stash);
 }
-/* Removes extracted line from stash, keeps only data after newline
-   Returns NULL if no newline found (last line was read) */
+
 char	*clean_stash(char *stash)
 {
 	int		i;
@@ -87,9 +85,7 @@ size_t	ft_strlen(const char *s)
 		i++;
 	return (i);
 }
-/* Reads one line from file descriptor fd
-   Returns line with newline if present, NULL at EOF or error
-   Supports multiple file descriptors simultaneously (bonus) */
+
 char	*get_next_line(int fd)
 {
 	char		*line;
