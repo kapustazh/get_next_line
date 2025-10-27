@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atvii <atvii@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnestere <mnestere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 21:08:57 by mnestere          #+#    #+#             */
-/*   Updated: 2025/10/26 00:01:39 by atvii            ###   ########.fr       */
+/*   Updated: 2025/10/27 12:11:42 by mnestere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*read_and_stash(int fd, char *stash)
 		temp[b_read] = '\0';
 		stash = join_and_free(stash, temp);
 		if (!stash)
-			return (stash = NULL, free_and_null(temp));
+			return (free_and_null(stash));
 	}
 	free(temp);
 	return (stash);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atvii <atvii@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnestere <mnestere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 21:10:57 by mnestere          #+#    #+#             */
-/*   Updated: 2025/10/26 00:21:41 by atvii            ###   ########.fr       */
+/*   Updated: 2025/10/27 12:11:45 by mnestere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	substr[i] = '\0';
 	return (substr);
 }
+
 /* Joins stash and temp into new string, frees old stash
    Returns NULL and frees stash if malloc fails */
 char	*join_and_free(char *stash, char *temp)
@@ -54,6 +55,7 @@ char	*join_and_free(char *stash, char *temp)
 	free(stash);
 	return (new_stash);
 }
+
 /* Removes extracted line from stash, keeps only data after newline
    Returns NULL if no newline found (last line was read) */
 char	*clean_stash(char *stash)
@@ -87,6 +89,7 @@ size_t	ft_strlen(const char *s)
 		i++;
 	return (i);
 }
+
 /* Reads one line from file descriptor fd
    Returns line with newline if present, NULL at EOF or error
    Supports multiple file descriptors simultaneously (bonus) */
