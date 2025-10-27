@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mnestere <mnestere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 21:10:57 by mnestere          #+#    #+#             */
-/*   Updated: 2025/10/27 12:51:22 by mnestere         ###   ########.fr       */
+/*   Updated: 2025/10/27 20:30:39 by mnestere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,6 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || fd >= MAX_FD || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (read(fd, NULL, 0) < 0)
-		return (free(stash[fd]), stash[fd] = NULL, NULL);
 	stash[fd] = read_and_stash(fd, stash[fd]);
 	if (!stash[fd])
 		return (stash[fd] = NULL, NULL);

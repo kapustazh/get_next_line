@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mnestere <mnestere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 21:08:57 by mnestere          #+#    #+#             */
-/*   Updated: 2025/10/27 12:52:42 by mnestere         ###   ########.fr       */
+/*   Updated: 2025/10/27 20:27:53 by mnestere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char	*extract_line_from_stash(char *stash)
 {
 	size_t	line_len;
 	char	*new_line_ptr;
+	char	*line_to_return;
 
 	if (!stash)
 		return (NULL);
@@ -61,7 +62,10 @@ char	*extract_line_from_stash(char *stash)
 		line_len = ft_strlen(stash);
 	if (line_len == 0)
 		return (NULL);
-	return (ft_substr(stash, 0, line_len));
+	line_to_return = ft_substr(stash, 0, line_len);
+	if (!line_to_return)
+		return (NULL);
+	return (line_to_return);
 }
 
 char	*find_the_n(const char *str)
