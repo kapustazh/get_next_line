@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mnestere <mnestere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 21:10:57 by mnestere          #+#    #+#             */
-/*   Updated: 2025/10/27 12:11:39 by mnestere         ###   ########.fr       */
+/*   Updated: 2025/10/27 12:51:22 by mnestere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (substr);
 }
 
+/* Joins stash and temp into new string, frees old stash
+   Returns NULL and frees stash if malloc fails */
 char	*join_and_free(char *stash, char *temp)
 {
 	char	*new_stash;
@@ -54,6 +56,8 @@ char	*join_and_free(char *stash, char *temp)
 	return (new_stash);
 }
 
+/* Removes extracted line from stash, keeps only data after newline
+   Returns NULL if no newline found (last line was read) */
 char	*clean_stash(char *stash)
 {
 	int		i;
@@ -86,6 +90,9 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
+/* Reads one line from file descriptor fd
+   Returns line with newline if present, NULL at EOF or error
+   Supports multiple file descriptors simultaneously (bonus) */
 char	*get_next_line(int fd)
 {
 	char		*line;
@@ -123,12 +130,12 @@ char	*get_next_line(int fd)
 // 			break ;
 // 		printf("%s", line);
 // 		free(line);
-// 		// if (lines_read == 5)
-// 		// {
-// 		// 	while ((line = get_next_line(fd)) != NULL)
-// 		// 		free(line);
-// 		// 	break ;
-// 		// }
+// 		if (lines_read == 5)
+// 		{
+// 			while ((line = get_next_line(fd)) != NULL)
+// 				free(line);
+// 			break ;
+// 		}
 // 	}
 // 	close(fd);
 // 	return (0);

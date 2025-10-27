@@ -6,7 +6,7 @@
 /*   By: mnestere <mnestere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 21:10:57 by mnestere          #+#    #+#             */
-/*   Updated: 2025/10/27 12:11:45 by mnestere         ###   ########.fr       */
+/*   Updated: 2025/10/27 12:51:22 by mnestere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,12 +130,12 @@ char	*get_next_line(int fd)
 // 			break ;
 // 		printf("%s", line);
 // 		free(line);
-// 		// if (lines_read == 5)
-// 		// {
-// 		// 	while ((line = get_next_line(fd)) != NULL)
-// 		// 		free(line);
-// 		// 	break ;
-// 		// }
+// 		if (lines_read == 5)
+// 		{
+// 			while ((line = get_next_line(fd)) != NULL)
+// 				free(line);
+// 			break ;
+// 		}
 // 	}
 // 	close(fd);
 // 	return (0);
