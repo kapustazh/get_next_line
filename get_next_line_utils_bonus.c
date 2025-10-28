@@ -6,11 +6,11 @@
 /*   By: mnestere <mnestere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 21:08:57 by mnestere          #+#    #+#             */
-/*   Updated: 2025/10/27 20:27:53 by mnestere         ###   ########.fr       */
+/*   Updated: 2025/10/28 14:35:40 by mnestere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*free_and_null(char *stash)
 {

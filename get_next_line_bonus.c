@@ -6,11 +6,11 @@
 /*   By: mnestere <mnestere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 21:10:57 by mnestere          #+#    #+#             */
-/*   Updated: 2025/10/27 20:30:39 by mnestere         ###   ########.fr       */
+/*   Updated: 2025/10/28 14:47:56 by mnestere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 /* Extracts substring from string s starting at position start with length len
  Handles edge cases: NULL string, start beyond string length */
